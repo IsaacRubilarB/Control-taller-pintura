@@ -1,0 +1,189 @@
+/* Configuración General */
+:root {
+    --azul-oscuro: #2c3e50;
+    --azul-medio: #34495e;
+    --verde-enaer: #1abc9c;
+    --blanco: #ffffff;
+    --gris-fondo: #f4f7f6;
+    --rojo-alerta: #e74c3c;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--gris-fondo);
+    margin: 0;
+    color: var(--azul-oscuro);
+}
+
+/* Encabezado y Navegación */
+header {
+    background-color: var(--azul-oscuro);
+    color: var(--blanco);
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+header h1 { margin: 0; font-size: 1.8rem; }
+header p { margin: 5px 0 15px; opacity: 0.8; }
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+nav button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--azul-medio);
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+nav button:hover {
+    background-color: var(--verde-enaer);
+}
+
+/* Contenedores Principales */
+main {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+.tab-content {
+    background: var(--blanco);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* Formularios */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+input, select, textarea {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+textarea { height: 80px; resize: vertical; }
+
+.btn-guardar {
+    background-color: var(--verde-enaer);
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-guardar:hover {
+    filter: brightness(0.9);
+}
+
+.lista-contenedor {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.persona-card {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    /* Borde por defecto (Disponible) */
+    border-left: 5px solid #2ecc71; 
+}
+
+/* --- ESTADOS (Prioridad) --- */
+
+/* Cuando la tarjeta tiene la clase 'ocupado' */
+.persona-card.ocupado {
+    border-left: 5px solid #f39c12 !important; 
+    background-color: #fff9f0 !important;
+}
+
+.badge {
+    background-color: #2ecc71;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+/* Cuando el badge tiene la clase 'ocupado' */
+.badge.ocupado {
+    background-color: #f39c12 !important;
+    color: white !important;
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.tarea-card {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 15px;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.tarea-card h3 { margin: 0 0 10px; color: var(--verde-enaer); }
+.tarea-card p { margin: 5px 0; font-size: 0.9rem; }
+h3 {
+    color: var(--azul-oscuro);
+    padding-bottom: 5px;
+}
+
+.modal {
+    position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;
+}
+.modal-content {
+    background: white; padding: 25px; border-radius: 8px; width: 350px; text-align: center;
+}
+#selectEspecialistas { width: 100%; margin-top: 10px; }
+
+.badge-persona {
+    background: #e1f5fe;
+    color: #0288d1;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    margin-right: 5px;
+    display: inline-block;
+    border: 1px solid #b3e5fc;
+}
+.status-tag {
+    float: right;
+    background: #ffe0b2;
+    color: #e65100;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+

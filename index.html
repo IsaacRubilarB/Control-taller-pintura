@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Taller - Pintura ENAER</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Sistema de Control de Trabajo</h1>
+        <p>Taller de Pintura - Gestión de Especialistas y Tareas</p>
+        <nav>
+            <button onclick="cambiarPestaña('p-especialistas')">Personal</button>
+            <button onclick="cambiarPestaña('p-tareas')">Nueva Tarea (OT/OP)</button>
+            <button onclick="cambiarPestaña('p-dashboard')">Panel de Control</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="p-especialistas" class="tab-content">
+            <h2>Registro de Especialistas</h2>
+            <div class="form-group">
+                <input type="text" id="nombreEspecialista" placeholder="Nombre completo">
+                <select id="rolEspecialista">
+                    <option value="Pintor">Pintor</option>
+                    <option value="Inspector">Inspector</option>
+                    <option value="ETA">Personal ETA</option>
+                    <option value="Supervisor">Supervisor</option>
+                    <option value="Mecanico sistemas">Mecanico sistemas</option>
+                    <option value="Logístico">Logístico</option>
+                </select>
+                <button class="btn-guardar" onclick="agregarPersona()">Agregar al Taller</button>
+            </div>
+            <hr>
+            <h3>Personal en el Taller</h3>
+            <div id="listaPersonas" class="lista-contenedor">
+                </div>
+        </section>
+
+        <section id="p-tareas" class="tab-content" style="display:none;">
+            <h2>Nueva Orden de Trabajo</h2>
+            <div class="form-container">
+                <div class="form-group">
+                    <label>Número de OT:</label>
+                    <input type="text" id="otNumber" placeholder="Ej: OT-2026-001">
+                </div>
+                <div class="form-group">
+                    <label>Número de OP:</label>
+                    <input type="text" id="opNumber" placeholder="Ej: OP-45">
+                </div>
+                <div class="form-group">
+                    <label>Descripción de Tarea:</label>
+                    <textarea id="tareaDesc" placeholder="Detalle de la tarea (ej: Pintura de inlet FS 341)"></textarea>
+                </div>
+                <button class="btn-guardar" onclick="crearTarea()">Crear Tarea en Sistema</button>
+            </div>
+        </section>
+
+        <section id="p-dashboard" class="tab-content" style="display:none;">
+            <h2>Estado del Taller en Tiempo Real</h2>
+            <div id="gridTareas" class="dashboard-grid">
+                <p>Cargando tareas activas...</p>
+            </div>
+        </section>
+    </main>
+
+<div id="modalAsignar" class="modal" style="display:none;">
+    <div class="modal-content">
+        <h3>Asignar Especialista a la Tarea</h3>
+        <p id="infoTareaAsignar"></p>
+        <select id="selectEspecialistas">
+            </select>
+        <div style="margin-top: 20px;">
+            <button class="btn-guardar" onclick="confirmarAsignacion()">Confirmar</button>
+            <button onclick="cerrarModal()" style="background:gray; color:white; border:none; padding:10px; border-radius:4px; cursor:pointer;">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script src="firebase-config.js"></script>
+    
+    <script src="app.js"></script>
+
+</body>
+</html>
