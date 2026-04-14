@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Control de Taller - Pintura ENAER</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
@@ -15,6 +16,8 @@
             <button onclick="cambiarPestaña('p-especialistas')">Personal</button>
             <button onclick="cambiarPestaña('p-tareas')">Nueva Tarea (OT/OP)</button>
             <button onclick="cambiarPestaña('p-dashboard')">Panel de Control</button>
+            <button onclick="cambiarPestaña('p-historial')">Historial y Procesos</button>
+            <button onclick="cambiarPestaña('p-hh')">Gestión HH</button>
         </nav>
     </header>
 
@@ -35,8 +38,7 @@
             </div>
             <hr>
             <h3>Personal en el Taller</h3>
-            <div id="listaPersonas" class="lista-contenedor">
-                </div>
+            <div id="listaPersonas" class="lista-contenedor"></div>
         </section>
 
         <section id="p-tareas" class="tab-content" style="display:none;">
@@ -52,7 +54,7 @@
                 </div>
                 <div class="form-group">
                     <label>Descripción de Tarea:</label>
-                    <textarea id="tareaDesc" placeholder="Detalle de la tarea (ej: Pintura de inlet FS 341)"></textarea>
+                    <textarea id="tareaDesc" placeholder="Detalle de la tarea (ej: Indicar PLC en la que se trabajara)"></textarea>
                 </div>
                 <button class="btn-guardar" onclick="crearTarea()">Crear Tarea en Sistema</button>
             </div>
@@ -64,28 +66,62 @@
                 <p>Cargando tareas activas...</p>
             </div>
         </section>
+
+        <section id="p-historial" class="tab-content" style="display:none;">
+            <h2>Historial y Procesos</h2>
+            <div class="filtros-container">
+                <button class="btn-filtro" onclick="cargarHistorial('todas')">Todas</button>
+                <button class="btn-filtro" onclick="cargarHistorial('activas')">Activas</button>
+                <button class="btn-filtro" onclick="cargarHistorial('cerradas')">Cerradas</button>
+            </div>
+            <div id="listaHistorial" class="dashboard-grid">
+                <p>Selecciona un filtro para ver tareas...</p>
+            </div>
+        </section>
+
+        <section id="p-hh" class="tab-content" style="display:none;">
+            <div class="header-hh">
+                <h2>Reporte Diario de Horas Reales (H/H)</h2>
+                <div id="fechaHoy" class="fecha-label"></div>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Especialista</th>
+                            <th>Desglose de Tareas (OT / OP / HH)</th>
+                            <th>Total Reales</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaCuerpoHH">
+                        </tbody>
+                </table>
+            </div>
+
+            <div class="footer-hh">
+                <button class="btn-guardar-total" onclick="guardarTodoElDia()">💾 Registrar Jornada Completa</button>
+            </div>
+        </section>
     </main>
 
-<div id="modalAsignar" class="modal" style="display:none;">
-    <div class="modal-content">
-        <h3>Asignar Especialista a la Tarea</h3>
-        <p id="infoTareaAsignar"></p>
-        <select id="selectEspecialistas">
-            </select>
-        <div style="margin-top: 20px;">
-            <button class="btn-guardar" onclick="confirmarAsignacion()">Confirmar</button>
-            <button onclick="cerrarModal()" style="background:gray; color:white; border:none; padding:10px; border-radius:4px; cursor:pointer;">Cancelar</button>
+    <div id="modalAsignar" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h3>Asignar Especialista a la Tarea</h3>
+            <p id="infoTareaAsignar"></p>
+            <select id="selectEspecialistas"></select>
+            <div style="margin-top: 20px;">
+                <button class="btn-guardar" onclick="confirmarAsignacion()">Confirmar</button>
+                <button class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+            </div>
         </div>
     </div>
-</div>
-
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-
     <script src="firebase-config.js"></script>
-    
     <script src="app.js"></script>
 
-</body>
+</body> 
 </html>
