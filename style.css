@@ -136,21 +136,98 @@ textarea { height: 80px; resize: vertical; }
     color: white !important;
 }
 
-/* Dashboard Grid */
+/* Dashboard Grid: Alineación forzada */
 .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 20px;
+    align-items: stretch; /* Esto hace que las tarjetas de una misma fila midan lo mismo */
 }
 
 .tarea-card {
-    border: 1px solid #eee;
-    border-radius: 8px;
-    padding: 15px;
+    border: 1px solid #e0e0e0; /* Recuadro más sutil */
+    border-radius: 10px;
+    padding: 20px;
     background: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02); /* Sombra muy suave */
+    display: flex;
+    flex-direction: column; /* Apilamos el contenido verticalmente */
+    justify-content: space-between; /* Empuja los botones al final */
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
+.tarea-card:hover {
+    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+    border-color: var(--verde-enaer); /* Resalte al pasar el mouse */
+}
+
+.tag-avion {
+    background: #ebf5fb;
+    color: #2980b9;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    border: 1px solid #d4e6f1;
+    display: inline-block;
+}
+
+/* Contenedor de descripción con altura mínima para mantener simetría */
+.tarea-card .desc {
+    flex-grow: 1; /* Este elemento ocupará todo el espacio sobrante */
+    margin: 15px 0;
+    font-size: 0.9rem;
+    color: #444;
+    min-height: 60px; /* Asegura que incluso descripciones cortas ocupen un espacio base */
+}
+
+/* Unificación de botones de acción */
+.card-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: auto; /* Empuja el bloque de botones al fondo de la tarjeta */
+}
+
+.card-actions .btn-asignar {
+    grid-column: 1 / -1; /* El botón de asignar ocupa todo el ancho */
+    padding: 10px;
+}
+
+.card-actions button {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+
+.filtros-dashboard {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    margin-bottom: 25px;
+}
+
+.filtros-dashboard input, .filtros-dashboard select {
+    border: 1px solid #dcdde1;
+    padding: 8px 12px;
+}
+
+
+.fechas-historial {
+    background: #f8f9fa;
+    padding: 8px;
+    border-radius: 5px;
+    border-left: 3px solid #ddd;
+    line-height: 1.5;
+}
+
+.fechas-historial b {
+    color: var(--azul-oscuro);
+}
 .tarea-card h3 { margin: 0 0 10px; color: var(--verde-enaer); }
 .tarea-card p { margin: 5px 0; font-size: 0.9rem; }
 h3 {

@@ -3,27 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control de Taller - Pintura ENAER</title>
+    <title>Control de taller - Pintura ENAER</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
     <header>
-        <h1>Sistema de Control de Trabajo</h1>
-        <p>Taller de Pintura - Gestión de Especialistas y Tareas</p>
+        <h1>Sistema de control de trabajo</h1>
+        <p>Taller de pintura - Gestión de especialistas y tareas</p>
         <nav>
             <button onclick="cambiarPestaña('p-especialistas')">Personal</button>
-            <button onclick="cambiarPestaña('p-tareas')">Nueva Tarea (OT/OP)</button>
-            <button onclick="cambiarPestaña('p-dashboard')">Panel de Control</button>
-            <button onclick="cambiarPestaña('p-historial')">Historial y Procesos</button>
+            <button onclick="cambiarPestaña('p-tareas')">Nueva tarea (OT/OP)</button>
+            <button onclick="cambiarPestaña('p-dashboard')">Panel de control</button>
+            <button onclick="cambiarPestaña('p-flota')">DashBoard</button> <button onclick="cambiarPestaña('p-historial')">Historial y procesos</button>
             <button onclick="cambiarPestaña('p-hh')">Gestión HH</button>
         </nav>
     </header>
 
     <main>
         <section id="p-especialistas" class="tab-content">
-            <h2>Registro de Especialistas</h2>
+            <h2>Registro de especialistas</h2>
             <div class="form-group">
                 <input type="text" id="nombreEspecialista" placeholder="Nombre completo">
                 <select id="rolEspecialista">
@@ -34,41 +34,85 @@
                     <option value="Mecanico sistemas">Mecanico sistemas</option>
                     <option value="Logístico">Logístico</option>
                 </select>
-                <button class="btn-guardar" onclick="agregarPersona()">Agregar al Taller</button>
+                <button class="btn-guardar" onclick="agregarPersona()">Agregar al taller</button>
             </div>
             <hr>
-            <h3>Personal en el Taller</h3>
+            <h3>Personal en el taller</h3>
             <div id="listaPersonas" class="lista-contenedor"></div>
         </section>
 
         <section id="p-tareas" class="tab-content" style="display:none;">
-            <h2>Nueva Orden de Trabajo</h2>
+            <h2>Nueva orden de trabajo</h2>
             <div class="form-container">
+                <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Modelo de Avión:</label>
+                        <select id="modeloAvion">
+                            <option value="">Seleccione Modelo</option>
+                            <option value="F-16">F-16 Fighting Falcon</option>
+                            <option value="AME">F-16 AME</option>
+                            <option value="C-130">C-130 Hercules</option>
+                            <option value="Boeing">Boeing</option>
+                            <option value="A-29">A-29 Super Tucano</option>
+                            <option value="E3D">E3D - Sentry</option>
+                            <option value="CJ">CJ Citation</option>
+                            <option value="OTRO">Otro / Componente</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Matrícula / Num. Avión:</label>
+                        <input type="text" id="numAvion" placeholder="Ej: 855">
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label>Número de OT:</label>
-                    <input type="text" id="otNumber" placeholder="Ej: OT-2026-001">
+                    <input type="text" id="otNumber" placeholder="Ej: M453023">
                 </div>
                 <div class="form-group">
                     <label>Número de OP:</label>
-                    <input type="text" id="opNumber" placeholder="Ej: OP-45">
+                    <input type="text" id="opNumber" placeholder="Ej: 10">
                 </div>
                 <div class="form-group">
-                    <label>Descripción de Tarea:</label>
-                    <textarea id="tareaDesc" placeholder="Detalle de la tarea (ej: Indicar PLC en la que se trabajara)"></textarea>
+                    <label>Descripción de tarea:</label>
+                    <textarea id="tareaDesc" placeholder="Detalle de la tarea (ej: Pintura de Intake o Esquema de camuflaje)"></textarea>
                 </div>
-                <button class="btn-guardar" onclick="crearTarea()">Crear Tarea en Sistema</button>
+                <button class="btn-guardar" onclick="crearTarea()">Crear tarea en sistema</button>
             </div>
         </section>
 
         <section id="p-dashboard" class="tab-content" style="display:none;">
-            <h2>Estado del Taller en Tiempo Real</h2>
+            <h2>Estado del taller en tiempo real</h2>
+            <div class="filtros-dashboard" style="margin-bottom: 20px; display: flex; gap: 10px;">
+                <input type="text" id="filtroMatricula" placeholder="Filtrar por Matrícula (Ej: 854)" onkeyup="aplicarFiltrosDashboard()">
+                <select id="filtroModelo" onchange="aplicarFiltrosDashboard()">
+                    <option value="">Todos los Modelos</option>
+                    <option value="F-16">F-16</option>
+                    <option value="AME">F-16 AME</option>
+                    <option value="C-130">C-130</option>
+                    <option value="Boeing">Boeing</option>
+                    <option value="A-29">A-29</option>
+                    <option value="E3D">E3D</option>
+                    <option value="CJ">CJ Citation</option>
+                </select>
+                <button class="btn-mini-save" onclick="limpiarFiltros()">Reset</button>
+            </div>
             <div id="gridTareas" class="dashboard-grid">
                 <p>Cargando tareas activas...</p>
             </div>
         </section>
 
+        <section id="p-flota" class="tab-content" style="display:none;">
+            <div class="header-flota">
+                <h2>🚀 Monitoreo de Aeronaves en Taller</h2>
+                <p>Resumen operativo por matrícula y carga de trabajo.</p>
+            </div>
+            <div id="gridFlota" class="flota-grid">
+                </div>
+        </section>
+
         <section id="p-historial" class="tab-content" style="display:none;">
-            <h2>Historial y Procesos</h2>
+            <h2>Historial y procesos</h2>
             <div class="filtros-container">
                 <button class="btn-filtro" onclick="cargarHistorial('todas')">Todas</button>
                 <button class="btn-filtro" onclick="cargarHistorial('activas')">Activas</button>
@@ -82,9 +126,11 @@
         <section id="p-hh" class="tab-content" style="display:none;">
             <div class="header-hh">
                 <h2>Reporte Diario de Horas Reales (H/H)</h2>
-                <div id="fechaHoy" class="fecha-label"></div>
+                <div class="control-fecha-hh">
+                    <label for="fechaSeleccionada">Día de la Labor:</label>
+                    <input type="date" id="fechaSeleccionada" onchange="cargarTablaHH()">
+                </div>
             </div>
-
             <div class="table-wrapper">
                 <table class="excel-table">
                     <thead>
@@ -95,20 +141,15 @@
                             <th>Acción</th>
                         </tr>
                     </thead>
-                    <tbody id="tablaCuerpoHH">
-                        </tbody>
+                    <tbody id="tablaCuerpoHH"></tbody>
                 </table>
-            </div>
-
-            <div class="footer-hh">
-                <button class="btn-guardar-total" onclick="guardarTodoElDia()">💾 Registrar Jornada Completa</button>
             </div>
         </section>
     </main>
 
     <div id="modalAsignar" class="modal" style="display:none;">
         <div class="modal-content">
-            <h3>Asignar Especialista a la Tarea</h3>
+            <h3>Asignar especialista a la tarea</h3>
             <p id="infoTareaAsignar"></p>
             <select id="selectEspecialistas"></select>
             <div style="margin-top: 20px;">
